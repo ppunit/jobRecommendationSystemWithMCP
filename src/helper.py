@@ -43,34 +43,3 @@ def ask_groqai(prompt,max_tokens=500):
     )
     return response.choices[0].message.content
 
-
-def fetch_linkeding_jobs(search_query,location='india',rows=60):
-    """Fetch job listings from LinkedIn using Apify."""
-    run_input = {
-        "title": search_query,
-        "rows":rows,
-        "location":location,
-        "proxy":{
-            "useApifyProxy": True,
-            "apifyProxyGroups": ["RESIDENTIAL"]
-        }
-        
-    }
-
-    run = apify_client.actor("BHzefUZlZRKWxkTck").call(run_input=run_input)
-    jobs = list(apify_client.dataset(run["defaultDatasetId"]).iterate_items())
-    return jobs
-
-
-def fetch_naukri_jobs(search_query,location='india',limit=60):
-    """Fetch job listings from Naukri using Apify."""
-    run_input = {
-    "keyword": search_query,
-    "maxJobs":rows,
-    "freshness":"all",
-    "sortBy":"relevance",
-     "experience":"all",
-    "proxyConfiguration": { "useApifyProxy": False },
-    }
-
-    run = apify_client.actor("wsrn5gy5C4EDeYCcD").call(run_input=run_input)
